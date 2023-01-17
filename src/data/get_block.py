@@ -55,13 +55,15 @@ def getHash(start, end, attack_file='timestamp.csv'):
             timestamp_hash(timestamp, cat='normal')
 
 def getBlock():
-    os.environ['init_normal'] = "1"
-    os.environ['init_attack'] = "1"
+    if os.path.exists(f"{block_dir}/{cat}.json"):
+        os.environ['init_normal'] = "0"
+        os.environ['init_attack'] = "0"
+    else:
+        os.environ['init_normal'] = "1"
+        os.environ['init_attack'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
         init = int(os.environ['init_normal']) if cat == 'normal' else int(os.environ['init_attack'])
-        if os.path.exists(f"{block_dir}/{cat}.json") and init:
-            os.system(f"rm -rf {block_dir}/{cat}.json")
 
 
         #save block hash of dates in metadata according to category
@@ -83,9 +85,16 @@ def getBlock():
         else:
             os.environ['init_attack'] = "0"
 
+    record_write = open(f"{meta_dir}/record.txt", 'w')
+    record_read = [hash.strip() for hash in open(f"{meta_dir}/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         for data in json.load(open(f"{meta_dir}/{cat}.json", 'r')):
             hash = data['hash']
+            if hash in record_read:
+                continue
+
+            #record this file:
+            record_write.write(str(hash) + '\n')
             hash_block(hash, cat)
 
     
