@@ -65,7 +65,7 @@ def getBlock(start, end, type='normal'):
     if os.path.exists(f"{block_dir}/{type}/{type}_{start}_{end}.json"):
         os.environ[f'init_{type}'] = "0"
         fetched = len(json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r')))
-        print(f"Fetched {fetched/{end - start}}")
+        print(f"Fetched {fetched}/{end - start}")
     else:
         os.environ[f'init_{type}'] = "1"
     def hash_block(hash, cat='normal'):
