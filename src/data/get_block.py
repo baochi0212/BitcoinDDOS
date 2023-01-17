@@ -55,12 +55,11 @@ def getHash(start, end, attack_file='timestamp.csv'):
             timestamp_hash(timestamp, cat='normal')
 
 def getBlock():
-    if os.path.exists(f"{block_dir}/{cat}.json"):
-        os.environ['init_normal'] = "0"
-        os.environ['init_attack'] = "0"
-    else:
-        os.environ['init_normal'] = "1"
-        os.environ['init_attack'] = "1"
+    for cat in ["normal", "attack"]:
+        if os.path.exists(f"{block_dir}/{cat}.json"):
+            os.environ[f'init_{cat}'] = "0"
+        else:
+            os.environ[f'init_{cat}'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
         init = int(os.environ['init_normal']) if cat == 'normal' else int(os.environ['init_attack'])
