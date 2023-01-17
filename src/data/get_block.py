@@ -67,7 +67,7 @@ def getBlock(start, end, type='normal'):
         fetched = len(json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r')))
         print(f"Fetched {fetched/{end - start}}")
     else:
-        os.environ[f'init_{cat}'] = "1"
+        os.environ[f'init_{type}'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
         init = int(os.environ['init_normal'])
