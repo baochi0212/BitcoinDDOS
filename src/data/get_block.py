@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import json
 from datetime import datetime
+import argparse
+parser = argparse.ArgumentParser("For spam crawl")
+parser.add_argument('--num_spams', type=int, default=9)
 #path
 dir = os.environ.get('dir')
 block_dir, meta_dir = dir + '/data/raw/blockdata', dir + '/data/raw/metadata'
@@ -101,6 +104,7 @@ def getBlock():
 
     
 if __name__ == '__main__':
+    args = parser.parse_args()
     #timestamp file
     attack_file = 'timestamp.csv'
     #time period
@@ -110,5 +114,7 @@ if __name__ == '__main__':
     # get hash
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
-    getBlock()
+    for i in range(args.num_spams):
+        print("..............Another try .......")
+        getBlock()
 
