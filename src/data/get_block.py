@@ -107,7 +107,17 @@ def getBlock(start, end, type='normal'):
                     #record this file and fetch it:
                     record_write.write(str(hash) + '\n')
                     hash_block(hash, cat)
-    print()
+
+    #retrieve the erroneous one
+    fetch_hash = [i['hash'] for i in json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r'))]
+    print(f"FINISHED with erro ratio {len(fetch_hash)}/{len(record_read)}")
+    for hash in record_read:
+        if hash not in fetch_hash:
+            hash_block(hash, cat=type)
+
+    fetch_hash = [i['hash'] for i in json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r'))]
+    print(f"POST_PROCESSING with ratio {len(fetch_hash)}/{len(record_read)}")
+
     
 
 
@@ -124,3 +134,5 @@ if __name__ == '__main__':
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
     getBlock(start=args.start, end=args.end, type=args.type)
+    
+    
