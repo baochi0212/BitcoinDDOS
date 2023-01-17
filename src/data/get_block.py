@@ -107,7 +107,7 @@ def getBlock(start, end, type='normal'):
                     #record this file and fetch it:
                     record_write.write(str(hash) + '\n')
                     hash_block(hash, cat)
-
+    print()
     
 
 
