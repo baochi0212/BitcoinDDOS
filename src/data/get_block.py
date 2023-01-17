@@ -101,7 +101,7 @@ def getBlock(start, end, type='normal'):
                 if i in range(start, end):
                     hash = data['hash']
                     if hash in record_read:
-                        print("Overlapping")
+                        print("Overlapping", end=' ')
                         continue
 
                     #record this file and fetch it:
