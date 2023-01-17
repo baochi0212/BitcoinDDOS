@@ -34,7 +34,7 @@ def getHash(start, end, attack_file='timestamp.csv'):
             temp_dict = json.load(open(f"{meta_dir}/temp.json", 'r'))
             main_dict.extend(temp_dict)
             #dump back
-            json.dump(main_dict, open(f"{meta_dir}/{cat}.json", 'w'), indent=3)
+            json.dump(main_dict, open(f"{meta_dir}/{cat}_{start}_{end}.json", 'w'), indent=3)
         #no longer init
         if cat == 'normal':
             os.environ['init_normal'] = "0"
