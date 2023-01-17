@@ -88,12 +88,13 @@ def getBlock():
         else:
             os.environ['init_attack'] = "0"
 
-    record_write = open(f"{block_dir}/record.txt", 'w')
+    record_write = open(f"{block_dir}/record.txt", 'a')
     record_read = [hash.strip() for hash in open(f"{block_dir   }/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         for data in json.load(open(f"{meta_dir}/{cat}.json", 'r')):
             hash = data['hash']
             if hash in record_read:
+                print("Overlapping")
                 continue
 
             #record this file:
