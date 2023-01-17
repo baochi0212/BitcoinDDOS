@@ -90,10 +90,10 @@ def getBlock(start, end, type='normal'):
             os.environ['init_normal'] = "0"
         else:
             os.environ['init_attack'] = "0"
-    if not os.path.exists(f"{block_dir}/{cat}/record.txt"):
-        os.system(f"touch {block_dir}/{cat}/record.txt")
-    record_write = open(f"{block_dir}/{cat}/record.txt", 'a')
-    record_read = [hash.strip() for hash in open(f"{block_dir}/{cat}/record.txt", 'r').readlines()]
+    if not os.path.exists(f"{block_dir}/{type}/record.txt"):
+        os.system(f"touch {block_dir}/{type}/record.txt")
+    record_write = open(f"{block_dir}/{type}/record.txt", 'a')
+    record_read = [hash.strip() for hash in open(f"{block_dir}/{type}/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         if cat == type:
             for i, data in enumerate(json.load(open(f"{meta_dir}/{cat}.json", 'r'))):
