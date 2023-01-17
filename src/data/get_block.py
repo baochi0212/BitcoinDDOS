@@ -4,6 +4,7 @@ import os
 import json
 from datetime import datetime
 import argparse
+import fuckit
 parser = argparse.ArgumentParser("For spam crawl")
 parser.add_argument('--num_spams', type=int, default=9)
 #path
@@ -114,7 +115,8 @@ if __name__ == '__main__':
     # get hash
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
-    for i in range(args.num_spams):
-        print("..............Another try .......")
-        getBlock()
+    with fuckit:
+        for i in range(args.num_spams):
+            print("..............Another try .......")
+            getBlock()
 
