@@ -76,7 +76,7 @@ def getBlock(start, end, type='normal'):
         #save block hash of dates in metadata according to category
         save_file = f"{block_dir}/{cat}/{cat}_{start}_{end}.json" if init else f"{block_dir}/{cat}/temp.json"
         block_api = f"https://blockchain.info/rawblock/{hash}"
-        os.system(f"curl  {block_api} > {save_file}")
+        os.system(f"curl --silent {block_api} > {save_file}")
         #merge to main cat.json file
         if "temp" in save_file:
             main_dict = json.load(open(f"{block_dir}/{cat}/{cat}_{start}_{end}.json", 'r'))
@@ -107,7 +107,8 @@ def getBlock(start, end, type='normal'):
                     #record this file and fetch it:
                     record_write.write(str(hash) + '\n')
                     hash_block(hash, cat)
-
+    #NEW INFO 
+    print()
     #retrieve the erroneous one
     fetch_hash = [i['hash'] for i in json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r'))]
     print(f"FINISHED with erro ratio {len(fetch_hash)}/{len(record_read)}")
