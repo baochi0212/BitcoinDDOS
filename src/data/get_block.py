@@ -65,11 +65,12 @@ def getBlock(start, end, type='normal'):
     for cat in ["normal", "attack"]:
         if os.path.exists(f"{block_dir}/{cat}/{cat}_{start}_{end}.json"):
             os.environ[f'init_{cat}'] = "0"
+            print(f"Fetched {len(json.load(open(f"{block_dir}/{cat}/{cat}_{start}_{end}.json", 'r')))/{end - start}}")
         else:
             os.environ[f'init_{cat}'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
-        init = int(os.environ['init_normal']) if cat == 'normal' else int(os.environ['init_attack'])
+        init = int(os.environ['init_normal'])
 
 
         #save block hash of dates in metadata according to category
