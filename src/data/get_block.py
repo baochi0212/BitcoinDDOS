@@ -89,7 +89,7 @@ def getBlock():
             os.environ['init_attack'] = "0"
 
     record_write = open(f"{block_dir}/record.txt", 'a')
-    record_read = [hash.strip() for hash in open(f"{block_dir   }/record.txt", 'r').readlines()]
+    record_read = [hash.strip() for hash in open(f"{block_dir}/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         for data in json.load(open(f"{meta_dir}/{cat}.json", 'r')):
             hash = data['hash']
