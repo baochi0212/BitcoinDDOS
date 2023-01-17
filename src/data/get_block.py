@@ -6,7 +6,9 @@ from datetime import datetime
 import argparse
 import fuckit
 parser = argparse.ArgumentParser("For spam crawl")
-parser.add_argument('--num_spams', type=int, default=9)
+parser.add_argument('--start', type=int, required=True)
+parser.add_argument('--end', type=int, required=True)
+parser.add_argument('--type', type=str, choices=['attack', 'normal'], required=True)
 #path
 dir = os.environ.get('dir')
 block_dir, meta_dir = dir + '/data/raw/blockdata', dir + '/data/raw/metadata'
@@ -58,7 +60,8 @@ def getHash(start, end, attack_file='timestamp.csv'):
         else:
             timestamp_hash(timestamp, cat='normal')
 
-def getBlock():
+def getBlock(start, end, type='normal'):
+    #start, end for limit the curl process 
     for cat in ["normal", "attack"]:
         if os.path.exists(f"{block_dir}/{cat}.json"):
             os.environ[f'init_{cat}'] = "0"
@@ -91,15 +94,17 @@ def getBlock():
     record_write = open(f"{block_dir}/record.txt", 'a')
     record_read = [hash.strip() for hash in open(f"{block_dir}/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
-        for data in json.load(open(f"{meta_dir}/{cat}.json", 'r')):
-            hash = data['hash']
-            if hash in record_read:
-                print("Overlapping")
-                continue
+        if cat == type:
+            for i, data in enumerate(json.load(open(f"{meta_dir}/{cat}.json", 'r'))):
+                if i in range(start, end):
+                    hash = data['hash']
+                    if hash in record_read:
+                        print("Overlapping")
+                        continue
 
-            #record this file:
-            record_write.write(str(hash) + '\n')
-            hash_block(hash, cat)
+                    #record this file and fetch it:
+                    record_write.write(str(hash) + '\n')
+                    hash_block(hash, cat)
 
     
 
@@ -117,4 +122,3 @@ if __name__ == '__main__':
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
     getBlock()
-
