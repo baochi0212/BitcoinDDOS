@@ -63,7 +63,7 @@ def getHash(start, end, attack_file='timestamp.csv'):
 def getBlock(start, end, type='normal'):
     #start, end for limit the curl process 
     for cat in ["normal", "attack"]:
-        if os.path.exists(f"{block_dir}/{cat}_{start}_{end}.json"):
+        if os.path.exists(f"{block_dir}/{cat}/{cat}_{start}_{end}.json"):
             os.environ[f'init_{cat}'] = "0"
         else:
             os.environ[f'init_{cat}'] = "1"
@@ -73,26 +73,26 @@ def getBlock(start, end, type='normal'):
 
 
         #save block hash of dates in metadata according to category
-        save_file = f"{block_dir}/{cat}_{start}_{end}.json" if init else f"{block_dir}/temp.json"
+        save_file = f"{block_dir}/{cat}/{cat}_{start}_{end}.json" if init else f"{block_dir}/{cat}/temp.json"
         block_api = f"https://blockchain.info/rawblock/{hash}"
         os.system(f"curl {block_api} > {save_file}")
         #merge to main cat.json file
         if "temp" in save_file:
-            main_dict = json.load(open(f"{block_dir}/{cat}_{start}_{end}.json", 'r'))
+            main_dict = json.load(open(f"{block_dir}/{cat}/{cat}_{start}_{end}.json", 'r'))
             if isinstance(main_dict, dict):
                 main_dict = [main_dict]
-            temp_dict = json.load(open(f"{block_dir}/temp.json", 'r'))
+            temp_dict = json.load(open(f"{block_dir}/{cat}/temp.json", 'r'))
             main_dict.append(temp_dict)
             #dump back
-            json.dump(main_dict, open(f"{block_dir}/{cat}_{start}_{end}.json", 'w'), indent=3)
+            json.dump(main_dict, open(f"{block_dir}/{cat}/{cat}_{start}_{end}.json", 'w'), indent=3)
         #no longer init
         if cat == 'normal':
             os.environ['init_normal'] = "0"
         else:
             os.environ['init_attack'] = "0"
 
-    record_write = open(f"{block_dir}/record.txt", 'a')
-    record_read = [hash.strip() for hash in open(f"{block_dir}/record.txt", 'r').readlines()]
+    record_write = open(f"{block_dir}/{cat}/record.txt", 'a')
+    record_read = [hash.strip() for hash in open(f"{block_dir}/{cat}/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         if cat == type:
             for i, data in enumerate(json.load(open(f"{meta_dir}/{cat}.json", 'r'))):
