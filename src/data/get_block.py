@@ -27,7 +27,7 @@ def getHash(start, end, attack_file='timestamp.csv'):
         #save block hash of dates in metadata according to category
         save_file = f"{meta_dir}/{cat}.json" if init else f"{meta_dir}/temp.json"
         time_api = f"https://blockchain.info/blocks/{timestamp}?format=json"
-        os.system(f"curl --http 1.1 {time_api} > {save_file}")
+        os.system(f"curl -s --http 1.1 {time_api} > {save_file}")
         #merge to main cat.json file
         if "temp" in save_file:
             main_dict = json.load(open(f"{meta_dir}/{cat}.json", 'r'))
