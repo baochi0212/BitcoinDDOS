@@ -46,7 +46,9 @@ def getHash(start, end, attack_file='timestamp.csv'):
 
 
     #divide into 2 cats
+    record_file = open(f"{meta_dir}/record.txt", 'w')
     for timestamp in allday_list:
+        record_file.write(str(timestamp) + '\n')
         if timestamp in attack_list:
             timestamp_hash(timestamp, cat='attack')
         else:
@@ -58,7 +60,6 @@ def getBlock():
     def hash_block(hash, cat='normal'):
         #init or cont' ?
         init = int(os.environ['init_normal']) if cat == 'normal' else int(os.environ['init_attack'])
-        print(f"{hash[:8]}, init ?", bool(init))
         if os.path.exists(f"{block_dir}/{cat}.json") and init:
             os.system(f"rm -rf {block_dir}/{cat}.json")
 
@@ -95,11 +96,11 @@ if __name__ == '__main__':
     #timestamp file
     attack_file = 'timestamp.csv'
     #time period
-    start, end = '2011-02-01', '2011-03-01'
+    start, end = '2011-02-01', '2013-10-31'
     #attack timestamp
     get_timestamp(attack_file)
     # get hash
-    getHash(start=start, end=end, attack_file=attack_file)
+    # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
     getBlock()
 
