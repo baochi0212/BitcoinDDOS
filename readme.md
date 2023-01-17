@@ -3,3 +3,5 @@
 export dir=`pwd`
 #crawl strategy:
 #February 2011 and October 2013 -> benign vs attack
+#feature extraction
+follow the paper
