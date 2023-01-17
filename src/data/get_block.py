@@ -121,4 +121,4 @@ if __name__ == '__main__':
     # get hash
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
-    getBlock()
+    getBlock(start=args.start, end=args.end, type=args.type)
