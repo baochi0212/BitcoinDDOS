@@ -7,7 +7,7 @@ for ((i = 0; i <= $n_spams; i++));
 do
     echo "Step: ${i}, type: ${type}" 
     echo "Limit: ${start} -> ${end}"
-    python src/data/get_block.py --start $start \\
-     --end $end \\
-     --type $type \\
+    python src/data/get_block.py --start $start \
+                --end $end \
+                --type $type 
 done
