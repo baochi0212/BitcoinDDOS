@@ -62,13 +62,12 @@ def getHash(start, end, attack_file='timestamp.csv'):
 
 def getBlock(start, end, type='normal'):
     #start, end for limit the curl process 
-    for cat in ["normal", "attack"]:
-        if os.path.exists(f"{block_dir}/{cat}/{cat}_{start}_{end}.json"):
-            os.environ[f'init_{cat}'] = "0"
-            feteched = len(json.load(open(f"{block_dir}/{cat}/{cat}_{start}_{end}.json", 'r')))
-            print(f"Fetched {feteched/{end - start}}")
-        else:
-            os.environ[f'init_{cat}'] = "1"
+    if os.path.exists(f"{block_dir}/{type}/{type}_{start}_{end}.json"):
+        os.environ[f'init_{type}'] = "0"
+        fetched = len(json.load(open(f"{block_dir}/{type}/{type}_{start}_{end}.json", 'r')))
+        print(f"Fetched {fetched/{end - start}}")
+    else:
+        os.environ[f'init_{cat}'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
         init = int(os.environ['init_normal'])
