@@ -70,7 +70,7 @@ def getBlock(start, end, type='normal'):
         os.environ[f'init_{type}'] = "1"
     def hash_block(hash, cat='normal'):
         #init or cont' ?
-        init = int(os.environ['init_normal'])
+        init = int(os.environ[f'init_{cat}'])
 
 
         #save block hash of dates in metadata according to category
