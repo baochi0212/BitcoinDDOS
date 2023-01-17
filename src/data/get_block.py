@@ -89,7 +89,7 @@ def getBlock():
             os.environ['init_attack'] = "0"
 
     record_write = open(f"{block_dir}/record.txt", 'w')
-    record_read = [hash.strip() for hash in open(f"{block_dir}/record.txt", 'r').readlines()]
+    record_read = [hash.strip() for hash in open(f"{block_dir   }/record.txt", 'r').readlines()]
     for cat in ['normal', 'attack']:
         for data in json.load(open(f"{meta_dir}/{cat}.json", 'r')):
             hash = data['hash']
@@ -115,8 +115,5 @@ if __name__ == '__main__':
     # get hash
     # getHash(start=start, end=end, attack_file=attack_file)
     #get block info
-    with fuckit:
-        for i in range(args.num_spams):
-            print("..............Another try .......")
-            getBlock()
+    getBlock()
 
