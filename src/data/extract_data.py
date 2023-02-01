@@ -154,7 +154,7 @@ def extract_statistical_data_from_dir(dir: str, output_path: str) -> None:
     
     # Label columns
     df_columns.append("Is DDoS Attack ?")         
-    labels = np.array([1] * all_files_statistical_data.shape[0] if "attack" in dir else [1] * all_files_statistical_data.shape[0])
+    labels = np.array([1] * all_files_statistical_data.shape[0] if "attack" in dir else [0] * all_files_statistical_data.shape[0])
     labels = labels.reshape(-1, 1)
     
     # data and label
